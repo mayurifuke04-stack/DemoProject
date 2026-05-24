@@ -10,33 +10,30 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class ApiTest {
 
-    // Move your API key to a constant so it's easy to update or change later
-    private static final String API_KEY = "free_user_3EABSbCTdNFXCuOMPd6lFKi7JoQ";
+    private static final String API_KEY = "YOUR_ACTUAL_API_KEY_FROM_DASHBOARD";
 
     @BeforeClass
     public void setupConfig() {
-        // Base URI for API endpoints
         RestAssured.baseURI = "https://reqres.in/api";
     }
 
     @Test
     public void testLoginApiEndpoint() {
-        // Define payload as a clean JSON String
         String jsonPayload = "{"
                 + "\"email\": \"eve.holt@reqres.in\","
                 + "\"password\": \"cityslicka\""
                 + "}";
 
         given()
-            .header("x-api-key", API_KEY)            // <-- Added the required authentication header
+            .header("x-api-key", API_KEY)
             .contentType(ContentType.JSON)
             .body(jsonPayload)
         .when()
             .post("/login")
         .then()
-            .log().ifValidationFails()               // Helpful trick: logs details only if the test fails
-            .statusCode(200)                         // Asserts HTTP 200 OK status
-            .contentType(ContentType.JSON)           // Asserts response format is JSON
-            .body("token", notNullValue());          // Asserts that a token was generated
+            .log().ifValidationFails()
+            .statusCode(200)                         
+            .contentType(ContentType.JSON)           
+            .body("token", notNullValue());          
     }
 }
