@@ -10,7 +10,7 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class ApiTest {
 
-    private static final String API_KEY = "YOUR_ACTUAL_API_KEY_FROM_DASHBOARD";
+    private static final String API_KEY = "free_user_3EABSbCTdNFXCuOMPd6lFKi7JoQ";
 
     @BeforeClass
     public void setupConfig() {
