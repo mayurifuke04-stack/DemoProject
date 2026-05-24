@@ -10,6 +10,9 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class ApiTest {
 
+    // Move your API key to a constant so it's easy to update or change later
+    private static final String API_KEY = "free_user_3EABSbCTdNFXCuOMPd6lFKi7JoQ";
+
     @BeforeClass
     public void setupConfig() {
         // Base URI for API endpoints
@@ -25,11 +28,13 @@ public class ApiTest {
                 + "}";
 
         given()
+            .header("x-api-key", API_KEY)            // <-- Added the required authentication header
             .contentType(ContentType.JSON)
             .body(jsonPayload)
         .when()
             .post("/login")
         .then()
+            .log().ifValidationFails()               // Helpful trick: logs details only if the test fails
             .statusCode(200)                         // Asserts HTTP 200 OK status
             .contentType(ContentType.JSON)           // Asserts response format is JSON
             .body("token", notNullValue());          // Asserts that a token was generated
