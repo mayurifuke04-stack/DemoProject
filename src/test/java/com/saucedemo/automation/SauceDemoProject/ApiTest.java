@@ -1,20 +1,11 @@
 package com.saucedemo.automation.SauceDemoProject;
 
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.notNullValue;
+import org.testng.annotations.Test;
+import io.restassured.http.ContentType;
 
 public class ApiTest {
-
-    @BeforeClass
-    public void setupConfig() {
-        // Base URI for API endpoints
-        RestAssured.baseURI = "https://reqres.in/api";
-    }
 
     @Test
     public void testLoginApiEndpoint() {
@@ -28,10 +19,10 @@ public class ApiTest {
             .contentType(ContentType.JSON)
             .body(jsonPayload)
         .when()
-            .post("/login")
+            .post("https://reqres.in/api/login") // Absolute path keeps Jenkins totally safe!
         .then()
-            .statusCode(200)                         // Asserts HTTP 200 OK status
-            .contentType(ContentType.JSON)           // Asserts response format is JSON
-            .body("token", notNullValue());          // Asserts that a token was generated
+            .statusCode(200)                         
+            .contentType(ContentType.JSON)           
+            .body("token", notNullValue());          
     }
 }
